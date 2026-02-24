@@ -114,6 +114,38 @@ describe("TaskCard", () => {
     );
   });
 
+  it("renders due date when provided", () => {
+    render(<TaskCard {...defaultProps} item={mockItems.overdue} />);
+    expect(
+      screen.getByTestId(`due-date-${mockItems.overdue.id}`),
+    ).toBeInTheDocument();
+  });
+
+  it("does not render due date when not provided", () => {
+    render(<TaskCard {...defaultProps} item={mockItems.simple} />);
+    expect(
+      screen.queryByTestId(`due-date-${mockItems.simple.id}`),
+    ).not.toBeInTheDocument();
+  });
+
+  it("applies red class for overdue tasks", () => {
+    render(<TaskCard {...defaultProps} item={mockItems.overdue} />);
+    const dueDateEl = screen.getByTestId(`due-date-${mockItems.overdue.id}`);
+    expect(dueDateEl).toHaveClass("text-red-600");
+  });
+
+  it("applies orange class for tasks due soon", () => {
+    render(<TaskCard {...defaultProps} item={mockItems.dueSoon} />);
+    const dueDateEl = screen.getByTestId(`due-date-${mockItems.dueSoon.id}`);
+    expect(dueDateEl).toHaveClass("text-orange-500");
+  });
+
+  it("applies default slate class for tasks with normal due date", () => {
+    render(<TaskCard {...defaultProps} item={mockItems.dueNormal} />);
+    const dueDateEl = screen.getByTestId(`due-date-${mockItems.dueNormal.id}`);
+    expect(dueDateEl).toHaveClass("text-slate-500");
+  });
+
   it("has correct styling classes", () => {
     render(<TaskCard {...defaultProps} />);
     const taskCard = screen.getByTestId(`task-${mockItems.simple.id}`);

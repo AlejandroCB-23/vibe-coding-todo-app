@@ -17,6 +17,7 @@ describe("TaskForm", () => {
 
     expect(screen.getByLabelText(/task name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/description/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/due date/i)).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /create task/i }),
     ).toBeInTheDocument();
@@ -39,6 +40,7 @@ describe("TaskForm", () => {
       expect(onSubmit).toHaveBeenCalledWith({
         name: "Test Task",
         description: "",
+        due_date: null,
         tag_ids: [],
       });
     });
@@ -63,6 +65,7 @@ describe("TaskForm", () => {
       expect(onSubmit).toHaveBeenCalledWith({
         name: "Test Task",
         description: "Test Description",
+        due_date: null,
         tag_ids: [],
       });
     });
